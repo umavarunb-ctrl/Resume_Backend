@@ -79,8 +79,9 @@ def get_parsing_service() -> ParsingService:
     return ParsingService()
 
 
+@lru_cache
 def get_storage_service() -> StorageService:
-    """Dependency providing StorageService instance."""
+    """Dependency providing StorageService instance (cached singleton)."""
     return StorageService()
 
 
