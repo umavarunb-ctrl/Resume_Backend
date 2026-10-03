@@ -1,0 +1,32 @@
+# Core API Framework
+fastapi>=0.141.1,<1.0.0
+uvicorn[standard]>=0.54.0,<1.0.0
+
+# Database
+pymongo[srv]>=4.18.2,<5.0.0
+
+# Data Validation & Settings
+pydantic>=2.13.5,<3.0.0
+pydantic-settings>=2.15.0,<3.0.0
+email-validator>=2.3.0,<3.0.0
+python-dotenv>=1.2.3,<2.0.0
+
+# Security & Authentication
+PyJWT>=2.15.0,<3.0.0
+passlib>=1.7.4,<2.0.0
+bcrypt>=4.0.1,<5.0.0
+
+# File Upload & Document Extraction
+python-multipart>=0.0.32,<1.0.0
+PyMuPDF>=1.28.2,<2.0.0
+
+# Machine Learning & Vector Embeddings
+sentence-transformers>=6.1.0,<7.0.0
+torch>=2.14.0,<3.0.0
+
+# Testing & Client
+pytest>=9.1.1,<10.0.0
+httpx>=0.28.1,<1.0.0
+
+# Cloud Services
+oci>=2.138.0,<3.0.0
