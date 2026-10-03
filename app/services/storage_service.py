@@ -48,7 +48,12 @@ class StorageService:
                     "region": settings.OCI_REGION
                 }
                 oci.config.validate_config(self.oci_config)
-                self.client = oci.object_storage.ObjectStorageClient(self.oci_config)
+                # Set a timeout so OCI calls fail fast
+                # instead of hanging indefinitely when network is unreachable
+                self.client = oci.object_storage.ObjectStorageClient(
+                    self.oci_config,
+                    timeout=(10, 30),  # (connect_timeout, read_timeout) in seconds
+                )
                 self.enabled = True
             except Exception as e:
                 logger.error(f"Failed to initialize OCI Object Storage client: {e}")

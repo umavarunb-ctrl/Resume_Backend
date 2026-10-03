@@ -1,4 +1,5 @@
 import json
+import logging
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, WebSocket, WebSocketDisconnect, HTTPException, status
 
@@ -27,6 +28,8 @@ from app.services.chat.websocket_manager import ws_manager
 from app.services.auth_service import AuthService
 from app.core.security import decode_access_token
 from app.repositories.user_repository import UserRepository
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -178,7 +181,11 @@ def search_chat_users(
     for u in users:
         pic = u.get("profile_picture")
         if pic and pic.startswith("oci:"):
-            pic = auth_service.get_profile_picture_url(str(u["_id"]))
+            try:
+                pic = auth_service.get_profile_picture_url(str(u["_id"]))
+            except Exception:
+                logger.warning("Failed to generate profile picture URL for user %s", u["_id"])
+                pic = None
             
         result.append({
             "id": str(u["_id"]),
@@ -208,7 +215,11 @@ def get_chat_user(
 
     pic = user.get("profile_picture")
     if pic and pic.startswith("oci:"):
-        pic = auth_service.get_profile_picture_url(str(user["_id"]))
+        try:
+            pic = auth_service.get_profile_picture_url(str(user["_id"]))
+        except Exception:
+            logger.warning("Failed to generate profile picture URL for user %s", user["_id"])
+            pic = None
 
     return {
         "id": str(user["_id"]),
